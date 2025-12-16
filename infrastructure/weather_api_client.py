@@ -5,17 +5,18 @@ import requests  # type: ignore[import-untyped]
 
 from core.domains.location import Location
 from core.domains.weather import Weather
-from core.protocols.protocols import WeatherProtocol
+from core.protocols.weather_api_protocol import WeatherApiProtocol
 import logging
 
 logger = logging.getLogger(__name__)
 
-class WeatherApiClient(WeatherProtocol):
+class WeatherApiClient(WeatherApiProtocol):
+
+    def __init__(self, max_attempts: int = 3, wait_time: float = 5.0):
+        self.max_attempts = max_attempts
+        self.wait_time = wait_time
 
     def get_weather(self, location: Location) -> Weather:
-
-        MAX_ATTEMPT:int = 3
-        WAIT_TIME:float = 5
 
         logger.info(f"Fetching weather for {location}")
 
@@ -28,7 +29,7 @@ class WeatherApiClient(WeatherProtocol):
             "forecast_days": 1,
         }
 
-        for attempt in range(MAX_ATTEMPT):
+        for attempt in range(self.max_attempts):
             try:
                 response = requests.get(url=BASE_URL, params=params, timeout=5)
                 data: dict[str, dict[str, list]] = response.json()
@@ -52,8 +53,8 @@ class WeatherApiClient(WeatherProtocol):
                 if attempt == 2:
                     logger.error("Failed to fetch weather",exc_info=True)
                     raise
-                logger.warning(f"Attempt {attempt + 1} failed. Retrying in {WAIT_TIME} seconds...")
-                sleep(WAIT_TIME)
+                logger.warning(f"Attempt {attempt + 1} failed. Retrying in {self.wait_time} seconds...")
+                sleep(self.wait_time)
         raise RuntimeError("Unreachable: Weather could not be fetched.")
 
 

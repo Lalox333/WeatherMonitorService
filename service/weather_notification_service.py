@@ -1,5 +1,5 @@
 from core.domains.location import Location
-from core.protocols.protocols import MessengerProtocol
+from core.protocols.messenger_protocol import MessengerProtocol
 from service.weather_service import WeatherService
 import logging
 logger = logging.getLogger(__name__)

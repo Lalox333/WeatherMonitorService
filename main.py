@@ -8,6 +8,7 @@ from core.logging_setup import setup_logging
 
 
 def run():
+    # noinspection PyArgumentList
     settings = Settings()
 
     setup_logging()

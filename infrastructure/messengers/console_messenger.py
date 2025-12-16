@@ -1,4 +1,4 @@
-from core.protocols.protocols import MessengerProtocol
+from core.protocols.messenger_protocol import MessengerProtocol
 
 
 class ConsoleMessenger(MessengerProtocol):

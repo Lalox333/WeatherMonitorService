@@ -1,6 +1,6 @@
 import requests  # type: ignore[import-untyped]
 
-from core.protocols.protocols import MessengerProtocol
+from core.protocols.messenger_protocol import MessengerProtocol
 
 
 class TelegramMessenger(MessengerProtocol):
