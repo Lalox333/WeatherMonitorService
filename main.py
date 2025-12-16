@@ -4,9 +4,11 @@ from infrastructure.messengers.telegram_messenger import TelegramMessenger
 from infrastructure.weather_api_client import WeatherApiClient
 from service.weather_notification_service import WeatherNotificationService
 from service.weather_service import WeatherService
+from core.logging_setup import setup_logging
 
 
 def run():
+    setup_logging()
     config = Config.from_files()
     location = Location(name=config.name, latitude=config.latitude, longitude=config.longitude)
     weather_client = WeatherApiClient()

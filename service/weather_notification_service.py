@@ -1,7 +1,8 @@
 from core.domains.location import Location
 from core.protocols.protocols import MessengerProtocol
 from service.weather_service import WeatherService
-
+import logging
+logger = logging.getLogger(__name__)
 
 class WeatherNotificationService:
 
@@ -10,5 +11,11 @@ class WeatherNotificationService:
         self.weather_service: WeatherService = weather_service
 
     def run(self, location: Location):
-        summary = self.weather_service.get_weather_summary(location=location)
-        self.messenger.send_message(summary)
+        try:
+            logger.info(f"Sending weather notification for {location.name}")
+            summary = self.weather_service.get_weather_summary(location=location)
+            self.messenger.send_message(summary)
+            logger.info("Weather notification sent successfully")
+        except Exception:
+            logger.error("Notification failed",exc_info=True)
+            raise
