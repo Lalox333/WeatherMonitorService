@@ -1,9 +1,18 @@
-from core.domains.weather import Weather
+import os
+from infrastructure.weather_api_client import WeatherApiClient
+from dotenv import load_dotenv
+from core.domains.location import Location
+
 
 def run():
-    weather = Weather(location="Berlin",temperature_celsius=29,rain_chance=85)
-    print(weather.is_freezing(),weather.need_umbrella())
-
+    load_dotenv()
+    location = Location(
+        name=os.getenv("LOCATION_NAME"),
+        latitude=float(os.getenv("LATITUDE")),
+        longitude=float(os.getenv("LONGITUDE"))
+    )
+    weather_api_client = WeatherApiClient()
+    data = weather_api_client.get_weather(location)
 
 
 
