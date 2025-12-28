@@ -87,9 +87,9 @@ Code kopieren
 
 ### 3. `.env` Datei erstellen
 
-LOCATION_NAME=Berlin
-LATITUDE=52.5200
-LONGITUDE=13.4050
+LOCATION_NAME=xxx
+LATITUDE=xxx
+LONGITUDE=xxx
 
 TELEGRAM_CHAT_ID=<deine_chat_id>
 TELEGRAM_API_TOKEN=<dein_token>
